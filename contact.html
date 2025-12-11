@@ -1,486 +1,523 @@
-<!DOCTYPE html>  <html lang="ar" dir="rtl">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>تواصل معي - Df</title>  <!-- Fonts -->  
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
-  
-<!-- Tailwind CSS -->  
-<script src="https://cdn.tailwindcss.com"></script>  
-  
-<!-- Animation Libraries -->  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>  
-  
-<!-- Custom Styles -->  
-<style>  
-    :root {  
-        --primary-purple: #6b46c1;  
-        --dark-purple: #553c9a;  
-        --light-blue: #3b82f6;  
-        --glass-bg: rgba(30, 27, 75, 0.25);  
-        --glass-border: rgba(139, 92, 246, 0.2);  
-    }  
-      
-    * {  
-        margin: 0;  
-        padding: 0;  
-        box-sizing: border-box;  
-    }  
-      
-    body {  
-        font-family: 'Cairo', sans-serif;  
-        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);  
-        color: #ffffff;  
-        overflow-x: hidden;  
-        min-height: 100vh;  
-    }  
-      
-    /* Glassmorphism Effect */  
-    .glass {  
-        background: var(--glass-bg);  
-        backdrop-filter: blur(20px);  
-        border: 1px solid var(--glass-border);  
-        border-radius: 16px;  
-        transition: all 0.3s ease;  
-    }  
-      
-    .glass:hover {  
-        background: rgba(30, 27, 75, 0.35);  
-        box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);  
-    }  
-      
-    .glass-nav {  
-        background: rgba(30, 27, 75, 0.15);  
-        backdrop-filter: blur(20px);  
-        border-bottom: 1px solid rgba(139, 92, 246, 0.1);  
-    }  
-      
-    /* Animated Background */  
-    .animated-bg {  
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        z-index: -1;  
-        background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e, #0f0f23);  
-        background-size: 400% 400%;  
-        animation: gradientShift 20s ease infinite;  
-    }  
-      
-    @keyframes gradientShift {  
-        0% { background-position: 0% 50%; }  
-        50% { background-position: 100% 50%; }  
-        100% { background-position: 0% 50%; }  
-    }  
-      
-    /* Floating Shapes */  
-    .floating-shape {  
-        position: absolute;  
-        border-radius: 50%;  
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);  
-        filter: blur(40px);  
-        animation: float 20s infinite ease-in-out;  
-    }  
-      
-    .shape-1 {  
-        width: 300px;  
-        height: 300px;  
-        top: 10%;  
-        left: 10%;  
-        animation-delay: 0s;  
-    }  
-      
-    .shape-2 {  
-        width: 200px;  
-        height: 200px;  
-        top: 60%;  
-        right: 15%;  
-        animation-delay: 5s;  
-    }  
-      
-    @keyframes float {  
-        0%, 100% { transform: translateY(0px) rotate(0deg); }  
-        33% { transform: translateY(-20px) rotate(120deg); }  
-        66% { transform: translateY(10px) rotate(240deg); }  
-    }  
-      
-    /* Glow Effects */  
-    .glow-text {  
-        text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);  
-    }  
-      
-    /* Navigation */  
-    .nav-link {  
-        position: relative;  
-        transition: all 0.3s ease;  
-    }  
-      
-    .nav-link::after {  
-        content: '';  
-        position: absolute;  
-        bottom: -5px;  
-        right: 0;  
-        width: 0;  
-        height: 2px;  
-        background: linear-gradient(90deg, var(--primary-purple), var(--light-blue));  
-        transition: width 0.3s ease;  
-    }  
-      
-    .nav-link:hover::after,  
-    .nav-link.active::after {  
-        width: 100%;  
-    }  
-      
-    /* Animations */  
-    .fade-in {  
-        opacity: 0;  
-        transform: translateY(30px);  
-    }  
-      
-    .slide-in-left {  
-        opacity: 0;  
-        transform: translateX(-50px);  
-    }  
-      
-    .slide-in-right {  
-        opacity: 0;  
-        transform: translateX(50px);  
-    }  
-      
-    /* Contact Form Styles */  
-    .form-input {  
-        background: rgba(30, 27, 75, 0.2);  
-        border: 1px solid rgba(139, 92, 246, 0.3);  
-        border-radius: 12px;  
-        padding: 1rem;  
-        color: white;  
-        transition: all 0.3s ease;  
-        width: 100%;  
-    }  
-      
-    .form-input:focus {  
-        outline: none;  
-        border-color: var(--primary-purple);  
-        background: rgba(30, 27, 75, 0.3);  
-        box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);  
-    }  
-      
-    .form-input::placeholder {  
-        color: rgba(255, 255, 255, 0.5);  
-    }  
-      
-    /* Social Links */  
-    .social-link {  
-        display: inline-flex;  
-        align-items: center;  
-        justify-content: center;  
-        width: 60px;  
-        height: 60px;  
-        background: rgba(30, 27, 75, 0.2);  
-        border: 1px solid rgba(139, 92, 246, 0.3);  
-        border-radius: 50%;  
-        color: white;  
-        text-decoration: none;  
-        transition: all 0.3s ease;  
-        font-size: 1.5rem;  
-    }  
-      
-    .social-link:hover {  
-        background: var(--primary-purple);  
-        border-color: var(--primary-purple);  
-        transform: translateY(-5px) scale(1.1);  
-        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);  
-    }  
-      
-    /* Responsive */  
-    @media (max-width: 768px) {  
-        .floating-shape {  
-            display: none;  
-        }  
-    }  
-      
-    /* Scrollbar */  
-    ::-webkit-scrollbar {  
-        width: 8px;  
-    }  
-      
-    ::-webkit-scrollbar-track {  
-        background: rgba(30, 27, 75, 0.2);  
-    }  
-      
-    ::-webkit-scrollbar-thumb {  
-        background: linear-gradient(135deg, var(--primary-purple), var(--light-blue));  
-        border-radius: 4px;  
-    }  
-</style>
-
-</head>  
-<body>  
-    <!-- Animated Background -->  
-    <div class="animated-bg"></div>  <!-- Floating Shapes -->  
-<div class="floating-shape shape-1"></div>  
-<div class="floating-shape shape-2"></div>  
-  
-<!-- Navigation -->  
-<nav class="glass-nav fixed top-0 w-full z-50 transition-all duration-300" id="navbar">  
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
-        <div class="flex justify-between items-center h-16">  
-            <div class="flex-shrink-0">  
-                <h1 class="text-2xl font-bold glow-text">Df</h1>  
-            </div>  
-              
-            <div class="hidden md:block">  
-                <div class="ml-10 flex items-baseline space-x-4 space-x-reverse">  
-                    <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium">الرئيسية</a>  
-                    <a href="about.html" class="nav-link px-3 py-2 text-sm font-medium">من أنا</a>  
-                    <a href="skills.html" class="nav-link px-3 py-2 text-sm font-medium">القدرات</a>  
-                    <a href="services.html" class="nav-link px-3 py-2 text-sm font-medium">الخدمات</a>  
-                    <a href="coming-soon.html" class="nav-link px-3 py-2 text-sm font-medium">قريباً</a>  
-                    <a href="contact.html" class="nav-link active px-3 py-2 text-sm font-medium">تواصل</a>  
-                </div>  
-            </div>  
-              
-            <div class="md:hidden">  
-                <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none">  
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">  
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />  
-                    </svg>  
-                </button>  
-            </div>  
-        </div>  
-    </div>  
-      
-    <!-- Mobile Menu -->  
-    <div id="mobile-menu" class="md:hidden hidden glass border-t border-purple-500/20">  
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">  
-            <a href="index.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الرئيسية</a>  
-            <a href="about.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">من أنا</a>  
-            <a href="skills.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">القدرات</a>  
-            <a href="services.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الخدمات</a>  
-            <a href="coming-soon.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">قريباً</a>  
-            <a href="contact.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">تواصل</a>  
-        </div>  
-    </div>  
-</nav>  
-  
-<!-- Contact Section -->  
-<section class="py-20 pt-32 relative">  
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
-        <!-- Header -->  
-        <div class="text-center mb-16 fade-in">  
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">  
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">تواصل معي</span>  
-            </h1>  
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">  
-                جاهز للعمل على فكرتك القادمة. يمكنك التواصل معي بسهولة عبر الروابط التالية  
-            </p>  
-            <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full mt-6"></div>  
-        </div>  
-          
-        <!-- Split Layout -->  
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">  
-            <!-- Left Side - Contact Info -->  
-            <div class="slide-in-left">  
-                <div class="glass p-10 rounded-3xl h-full">  
-                    <h2 class="text-3xl font-bold mb-8 text-purple-300">دعنا نتواصل</h2>  
-                      
-                    <div class="space-y-8">  
-                        <!-- Description -->  
-                        <div>  
-                            <p class="text-lg text-gray-300 leading-relaxed mb-6">  
-                                أنا دائماً متحمس للعمل على مشاريع جديدة والتعاون مع أشخاص رائعين.   
-                                إذا كان لديك فكرة أو مشروع في mind، فلا تتردد في التواصل معي.  
-                            </p>  
-                            <p class="text-gray-400">  
-                                أرد الرد على جميع الرسائل في غضون 24 ساعة.  
-                            </p>  
-                        </div>  
-                          
-                        <!-- Social Links -->  
-                        <div>  
-                            <h3 class="text-xl font-semibold mb-6 text-blue-300">تواصل معي عبر</h3>  
-                            <div class="grid grid-cols-2 gap-4">
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/mondir.d.f?igsh=MWoza2VudWE4Z3RiYg==" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram">
-        <!-- Instagram SVG -->
-        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6" />
-            <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6" />
-            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
-        </svg>
-    </a>
-
-    <!-- LinkedIn -->
-    <a href="https://www.linkedin.com/in/mondir-deffous-835061283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
-        <!-- LinkedIn SVG -->
-        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="2.2" y="3.2" width="19.6" height="17.6" rx="2" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M6.8 9.3v7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            <circle cx="6.8" cy="6.3" r="1.1" fill="currentColor"/>
-            <path d="M10.8 9.3v1.8c0 .9 1.3 1.6 2 1.6 1 0 1.8-1.1 1.8-2.5V9.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
-
-    <!-- GitHub -->
-    <a href="https://github.com/mondirdf" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
-        <!-- GitHub SVG -->
-        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 2C9.8 2 8 3.8 8 6c0 2-.8 3.2-2 3.8v.6c0 .5.2.9.6 1.1 0 0 1.4.4 2 .2 0 0 .2-.6.8-1.2 1.5-.2 2.8-.2 4.3 0 .6.6.8 1.2.8 1.2.6.2 2-.2 2-.2.4-.2.6-.6.6-1.1v-.6C18.8 9.2 18 8 18 6c0-2.2-1.8-4-4-4z" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 20c1.2-.8 2.9-1 6-1s4.8.2 6 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
-
-    <!-- Email -->
-    <a href="mailto:mondir.dfs@gmail.com" class="social-link" title="Email">
-        <!-- Email SVG -->
-        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="2.5" y="5" width="19" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M3 7.5l8.5 6L20 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
-                            </div>  
-                          
-                        <!-- Quick Info -->  
-                        <div class="space-y-4">  
-                            <div class="flex items-center space-x-4 space-x-reverse">  
-                                <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">  
-                                    <span class="text-purple-300">⚡</span>  
-                                </div>  
-                                <div>  
-                                    <h4 class="font-semibold text-white">الرد السريع</h4>  
-                                    <p class="text-gray-400 text-sm">رد خلال 24 ساعة</p>  
-                                </div>  
-                            </div>  
-                              
-                            <div class="flex items-center space-x-4 space-x-reverse">  
-                                <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">  
-                                    <span class="text-blue-300">🤝</span>  
-                                </div>  
-                                <div>  
-                                    <h4 class="font-semibold text-white">استشارة مجانية</h4>  
-                                    <p class="text-gray-400 text-sm">لأول مشروع معي</p>  
-                                </div>  
-                            </div>  
-                              
-                            <div class="flex items-center space-x-4 space-x-reverse">  
-                                <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">  
-                                    <span class="text-purple-300">🌍</span>  
-                                </div>  
-                                <div>  
-                                    <h4 class="font-semibold text-white">عمل عن بعد</h4>  
-                                    <p class="text-gray-400 text-sm">متاح للعمل عن بعد</p>  
-                                </div>  
-                            </div>  
-                        </div>  
-                    </div>  
-                </div>  
-            </div>  
-              
-            <!-- Right Side - Contact Form -->  
-            <div class="slide-in-right">  
-                <div class="glass p-10 rounded-3xl">  
-                    <h2 class="text-3xl font-bold mb-8 text-blue-300">أرسل رسالة</h2>  
-                      
-                    <form id="contact-form" class="space-y-6">  
-                        <!-- Name -->  
-                        <div>  
-                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">  
-                                الاسم الكامل  
-                            </label>  
-                            <input   
-                                type="text"   
-                                id="name"   
-                                name="name"   
-                                required  
-                                class="form-input"  
-                                placeholder="أدخل اسمك الكامل"  
-                            >  
-                        </div>  
-                          
-                        <!-- Email -->  
-                        <div>  
-                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">  
-                                البريد الإلكتروني  
-                            </label>  
-                            <input   
-                                type="email"   
-                                id="email"   
-                                name="email"   
-                                required  
-                                class="form-input"  
-                                placeholder="أدخل بريدك الإلكتروني"  
-                            >  
-                        </div>  
-                          
-                        <!-- Subject -->  
-                        <div>  
-                            <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">  
-                                الموضوع  
-                            </label>  
-                            <select   
-                                id="subject"   
-                                name="subject"   
-                                required  
-                                class="form-input"  
-                            >  
-                                <option value="">اختر الموضوع</option>  
-                                <option value="web">تطوير موقع ويب</option>  
-                                <option value="bot">تطوير بوت</option>  
-                                <option value="automation">أتمتة</option>  
-                                <option value="tool">أداة مخصصة</option>  
-                                <option value="other">موضوع آخر</option>  
-                            </select>  
-                        </div>  
-                          
-                        <!-- Message -->  
-                        <div>  
-                            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">  
-                                الرسالة  
-                            </label>  
-                            <textarea   
-                                id="message"   
-                                name="message"   
-                                rows="5"   
-                                required  
-                                class="form-input resize-none"  
-                                placeholder="صف فكرتك أو مشروعك..."  
-                            ></textarea>  
-                        </div>  
-                          
-                        <!-- Submit Button -->  
-                        <div class="text-center">  
-                            <button   
-                                type="submit"   
-                                class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"  
-                            >  
-                                إرسال الرسالة  
-                                <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">  
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>  
-                                </svg>  
-                            </button>  
-                        </div>  
-                    </form>  
-                </div>  
-            </div>  
-        </div>  
-    </div>  
-</section>  
-  
-<!-- Footer -->  
-<footer class="py-12 relative">  
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">  
-        <div class="glass p-8 rounded-2xl">  
-            <p class="text-gray-400">&copy; 2024 Df. جميع الحقوق محفوظة.</p>  
-            <p class="text-sm text-gray-500 mt-2">مطور ويب وصانع أدوات ذكية</p>  
-        </div>  
-    </div>  
-</footer>  
-  
-<!-- JavaScript -->  
-<script src="js/main.js"></script>  
-<script>  
-    // Contact form handling  
-    document.addEventListener('DOMContentLoaded', function() {  
-        const contactForm = docume
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ - Df</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-purple: #6b46c1;
+            --dark-purple: #553c9a;
+            --light-blue: #3b82f6;
+            --glass-bg: rgba(30, 27, 75, 0.25);
+            --glass-border: rgba(139, 92, 246, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Glassmorphism Effect */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass:hover {
+            background: rgba(30, 27, 75, 0.35);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+        
+        .glass-nav {
+            background: rgba(30, 27, 75, 0.15);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e, #0f0f23);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Shapes */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            filter: blur(40px);
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+        
+        /* Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+        
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-purple), var(--light-blue));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        
+        /* Contact Form Styles */
+        .form-input {
+            background: rgba(30, 27, 75, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            background: rgba(30, 27, 75, 0.3);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Social Links */
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(30, 27, 75, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        
+        .social-link:hover {
+            background: var(--primary-purple);
+            border-color: var(--primary-purple);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-shape {
+                display: none;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 27, 75, 0.2);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-purple), var(--light-blue));
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Floating Shapes -->
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold glow-text">Df</h1>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4 space-x-reverse">
+                        <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</a>
+                        <a href="about.html" class="nav-link px-3 py-2 text-sm font-medium">Ù…Ù† Ø£Ù†Ø§</a>
+                        <a href="skills.html" class="nav-link px-3 py-2 text-sm font-medium">Ø§Ù„Ù‚Ø¯Ø±Ø§Øª</a>
+                        <a href="services.html" class="nav-link px-3 py-2 text-sm font-medium">Ø§Ù„Ø®Ø¯Ù…Ø§Øª</a>
+                        <a href="coming-soon.html" class="nav-link px-3 py-2 text-sm font-medium">Ù‚Ø±ÙŠØ¨Ø§Ù‹</a>
+                        <a href="contact.html" class="nav-link active px-3 py-2 text-sm font-medium">ØªÙˆØ§ØµÙ„</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden glass border-t border-purple-500/20">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©</a>
+                <a href="about.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">Ù…Ù† Ø£Ù†Ø§</a>
+                <a href="skills.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">Ø§Ù„Ù‚Ø¯Ø±Ø§Øª</a>
+                <a href="services.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">Ø§Ù„Ø®Ø¯Ù…Ø§Øª</a>
+                <a href="coming-soon.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">Ù‚Ø±ÙŠØ¨Ø§Ù‹</a>
+                <a href="contact.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">ØªÙˆØ§ØµÙ„</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contact Section -->
+    <section class="py-20 pt-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-16 fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Ø¬Ø§Ù‡Ø² Ù„Ù„Ø¹Ù…Ù„ Ø¹Ù„Ù‰ ÙÙƒØ±ØªÙƒ Ø§Ù„Ù‚Ø§Ø¯Ù…Ø©. ÙŠÙ…ÙƒÙ†Ùƒ Ø§Ù„ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ Ø¨Ø³Ù‡ÙˆÙ„Ø© Ø¹Ø¨Ø± Ø§Ù„Ø±ÙˆØ§Ø¨Ø· Ø§Ù„ØªØ§Ù„ÙŠØ©
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full mt-6"></div>
+            </div>
+            
+            <!-- Split Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <!-- Left Side - Contact Info -->
+                <div class="slide-in-left">
+                    <div class="glass p-10 rounded-3xl h-full">
+                        <h2 class="text-3xl font-bold mb-8 text-purple-300">Ø¯Ø¹Ù†Ø§ Ù†ØªÙˆØ§ØµÙ„</h2>
+                        
+                        <div class="space-y-8">
+                            <!-- Description -->
+                            <div>
+                                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                                    Ø£Ù†Ø§ Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ù…ØªØ­Ù…Ø³ Ù„Ù„Ø¹Ù…Ù„ Ø¹Ù„Ù‰ Ù…Ø´Ø§Ø±ÙŠØ¹ Ø¬Ø¯ÙŠØ¯Ø© ÙˆØ§Ù„ØªØ¹Ø§ÙˆÙ† Ù…Ø¹ Ø£Ø´Ø®Ø§Øµ Ø±Ø§Ø¦Ø¹ÙŠÙ†. 
+                                    Ø¥Ø°Ø§ ÙƒØ§Ù† Ù„Ø¯ÙŠÙƒ ÙÙƒØ±Ø© Ø£Ùˆ Ù…Ø´Ø±ÙˆØ¹ ÙÙŠ mindØŒ ÙÙ„Ø§ ØªØªØ±Ø¯Ø¯ ÙÙŠ Ø§Ù„ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ.
+                                </p>
+                                <p class="text-gray-400">
+                                    Ø£Ø±Ø¯ Ø§Ù„Ø±Ø¯ Ø¹Ù„Ù‰ Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø±Ø³Ø§Ø¦Ù„ ÙÙŠ ØºØ¶ÙˆÙ† 24 Ø³Ø§Ø¹Ø©.
+                                </p>
+                            </div>
+                            
+                            <!-- Social Links -->
+                            <div>
+                                <h3 class="text-xl font-semibold mb-6 text-blue-300">ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ Ø¹Ø¨Ø±</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <a href="https://t.me/yourusername" target="_blank" class="social-link" title="Telegram">
+                                        ðŸ“±
+                                    </a>
+                                    <a href="mailto:df@example.com" class="social-link" title="Email">
+                                        âœ‰ï¸
+                                    </a>
+                                    <a href="https://github.com/yourusername" target="_blank" class="social-link" title="GitHub">
+                                        ðŸ’»
+                                    </a>
+                                    <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link" title="LinkedIn">
+                                        ðŸ’¼
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Info -->
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-4 space-x-reverse">
+                                    <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
+                                        <span class="text-purple-300">âš¡</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Ø§Ù„Ø±Ø¯ Ø§Ù„Ø³Ø±ÙŠØ¹</h4>
+                                        <p class="text-gray-400 text-sm">Ø±Ø¯ Ø®Ù„Ø§Ù„ 24 Ø³Ø§Ø¹Ø©</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-4 space-x-reverse">
+                                    <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
+                                        <span class="text-blue-300">ðŸ¤</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Ø§Ø³ØªØ´Ø§Ø±Ø© Ù…Ø¬Ø§Ù†ÙŠØ©</h4>
+                                        <p class="text-gray-400 text-sm">Ù„Ø£ÙˆÙ„ Ù…Ø´Ø±ÙˆØ¹ Ù…Ø¹ÙŠ</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-4 space-x-reverse">
+                                    <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
+                                        <span class="text-purple-300">ðŸŒ</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Ø¹Ù…Ù„ Ø¹Ù† Ø¨Ø¹Ø¯</h4>
+                                        <p class="text-gray-400 text-sm">Ù…ØªØ§Ø­ Ù„Ù„Ø¹Ù…Ù„ Ø¹Ù† Ø¨Ø¹Ø¯</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Contact Form -->
+                <div class="slide-in-right">
+                    <div class="glass p-10 rounded-3xl">
+                        <h2 class="text-3xl font-bold mb-8 text-blue-300">Ø£Ø±Ø³Ù„ Ø±Ø³Ø§Ù„Ø©</h2>
+                        
+                        <form id="contact-form" class="space-y-6">
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Ø§Ù„Ø§Ø³Ù… Ø§Ù„ÙƒØ§Ù…Ù„
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    required
+                                    class="form-input"
+                                    placeholder="Ø£Ø¯Ø®Ù„ Ø§Ø³Ù…Ùƒ Ø§Ù„ÙƒØ§Ù…Ù„"
+                                >
+                            </div>
+                            
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    required
+                                    class="form-input"
+                                    placeholder="Ø£Ø¯Ø®Ù„ Ø¨Ø±ÙŠØ¯Ùƒ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ"
+                                >
+                            </div>
+                            
+                            <!-- Subject -->
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Ø§Ù„Ù…ÙˆØ¶ÙˆØ¹
+                                </label>
+                                <select 
+                                    id="subject" 
+                                    name="subject" 
+                                    required
+                                    class="form-input"
+                                >
+                                    <option value="">Ø§Ø®ØªØ± Ø§Ù„Ù…ÙˆØ¶ÙˆØ¹</option>
+                                    <option value="web">ØªØ·ÙˆÙŠØ± Ù…ÙˆÙ‚Ø¹ ÙˆÙŠØ¨</option>
+                                    <option value="bot">ØªØ·ÙˆÙŠØ± Ø¨ÙˆØª</option>
+                                    <option value="automation">Ø£ØªÙ…ØªØ©</option>
+                                    <option value="tool">Ø£Ø¯Ø§Ø© Ù…Ø®ØµØµØ©</option>
+                                    <option value="other">Ù…ÙˆØ¶ÙˆØ¹ Ø¢Ø®Ø±</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Message -->
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Ø§Ù„Ø±Ø³Ø§Ù„Ø©
+                                </label>
+                                <textarea 
+                                    id="message" 
+                                    name="message" 
+                                    rows="5" 
+                                    required
+                                    class="form-input resize-none"
+                                    placeholder="ØµÙ ÙÙƒØ±ØªÙƒ Ø£Ùˆ Ù…Ø´Ø±ÙˆØ¹Ùƒ..."
+                                ></textarea>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button 
+                                    type="submit" 
+                                    class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                                >
+                                    Ø¥Ø±Ø³Ø§Ù„ Ø§Ù„Ø±Ø³Ø§Ù„Ø©
+                                    <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="glass p-8 rounded-2xl">
+                <p class="text-gray-400">&copy; 2024 Df. Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø­Ù‚ÙˆÙ‚ Ù…Ø­ÙÙˆØ¸Ø©.</p>
+                <p class="text-sm text-gray-500 mt-2">Ù…Ø·ÙˆØ± ÙˆÙŠØ¨ ÙˆØµØ§Ù†Ø¹ Ø£Ø¯ÙˆØ§Øª Ø°ÙƒÙŠØ©</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // Contact form handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(this);
+                    const name = formData.get('name');
+                    const email = formData.get('email');
+                    const subject = formData.get('subject');
+                    const message = formData.get('message');
+                    
+                    // Create mailto link
+                    const subjectText = `Ø·Ù„Ø¨ ${subject === 'web' ? 'ØªØ·ÙˆÙŠØ± Ù…ÙˆÙ‚Ø¹' : 
+                                                   subject === 'bot' ? 'ØªØ·ÙˆÙŠØ± Ø¨ÙˆØª' :
+                                                   subject === 'automation' ? 'Ø£ØªÙ…ØªØ©' :
+                                                   subject === 'tool' ? 'Ø£Ø¯Ø§Ø© Ù…Ø®ØµØµØ©' : 'Ø®Ø¯Ù…Ø©'} Ù…Ù† ${name}`;
+                    const bodyText = `Ø§Ù„Ø§Ø³Ù…: ${name}%0D%0AØ§Ù„Ø¨Ø±ÙŠØ¯: ${email}%0D%0A%0D%0A${message}`;
+                    
+                    const mailtoLink = `mailto:df@example.com?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    const button = this.querySelector('button[type="submit"]');
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = `
+                        <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        ØªÙ… Ø§Ù„Ø¥Ø±Ø³Ø§Ù„!
+                    `;
+                    button.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.style.background = 'linear-gradient(90deg, #6b46c1, #3b82f6)';
+                        this.reset();
+                    }, 3000);
+                });
+            }
+            
+            // Form input animations
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
