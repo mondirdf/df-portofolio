@@ -3,483 +3,504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخدمات - Df</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Custom Styles -->
+    <title>الخدمات — Df Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <style>
         :root {
-            --primary-purple: #6b46c1;
-            --dark-purple: #553c9a;
-            --light-blue: #3b82f6;
-            --glass-bg: rgba(30, 27, 75, 0.25);
-            --glass-border: rgba(139, 92, 246, 0.2);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --purple-dark: #6b3fa0;
+            --purple-medium: #8b5cf6;
+            --purple-light: #a78bfa;
+            --blue-accent: #60a5fa;
+            --cyan-accent: #22d3ee;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: rgba(139, 92, 246, 0.1);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 24px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #ffffff;
+            font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
             overflow-x: hidden;
-            min-height: 100vh;
         }
-        
-        /* Glassmorphism Effect */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .glass:hover {
-            background: rgba(30, 27, 75, 0.35);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
-        }
-        
-        .glass-nav {
-            background: rgba(30, 27, 75, 0.15);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-        }
-        
-        /* Animated Background */
-        .animated-bg {
+
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e, #0f0f23);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Floating Shapes */
-        .floating-shape {
+
+        .gradient-orb {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
-            filter: blur(40px);
-            animation: float 20s infinite ease-in-out;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
         }
-        
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            top: 10%;
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--purple-medium), transparent);
+            top: 15%;
+            right: 5%;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--cyan-accent), transparent);
+            bottom: 20%;
             left: 10%;
-            animation-delay: 0s;
+            animation-delay: 7s;
         }
-        
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 15%;
-            animation-delay: 5s;
-        }
-        
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(120deg); }
-            66% { transform: translateY(10px) rotate(240deg); }
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(25px, -25px); }
+            50% { transform: translate(-15px, 15px); }
+            75% { transform: translate(15px, 25px); }
         }
-        
-        /* Glow Effects */
-        .glow-text {
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition-smooth);
         }
-        
-        /* Navigation */
-        .nav-link {
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--purple-light), var(--blue-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-smooth);
             position: relative;
-            transition: all 0.3s ease;
+            padding: 0.5rem 0;
         }
-        
-        .nav-link::after {
+
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             right: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--primary-purple), var(--light-blue));
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--purple-medium), var(--blue-accent));
+            transition: var(--transition-smooth);
         }
-        
-        .nav-link:hover::after,
-        .nav-link.active::after {
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
-        
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
-        
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
         }
-        
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
+
+        .services-section {
+            min-height: 100vh;
+            padding: 10rem 5% 6rem;
+            position: relative;
+            z-index: 1;
         }
-        
-        /* Service Card Hover Effects */
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .services-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
         .service-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
-        
+
         .service-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--purple-medium), var(--blue-accent));
+            border-radius: var(--border-radius);
+            opacity: 0;
+            z-index: -1;
+            transition: var(--transition-smooth);
         }
-        
+
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 70px rgba(139, 92, 246, 0.2);
+        }
+
         .service-card:hover::before {
-            left: 100%;
+            opacity: 0.15;
         }
-        
+
+        .service-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--purple-medium), var(--blue-accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover .service-icon-wrapper {
+            transform: rotate(-5deg) scale(1.1);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+
         .service-icon {
-            font-size: 4rem;
+            font-size: 2.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
             margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
         }
-        
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
+
+        .service-features {
+            list-style: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
         }
-        
-        /* Use Cases */
+
+        .service-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            padding-right: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--purple-light);
+            font-weight: bold;
+        }
+
         .use-case {
             background: rgba(139, 92, 246, 0.1);
             border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--purple-light);
         }
-        
-        .use-case:hover {
-            background: rgba(139, 92, 246, 0.2);
-            transform: translateX(5px);
+
+        .use-case strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
-        
-        /* Responsive */
+
+        .footer {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         @media (max-width: 768px) {
-            .floating-shape {
-                display: none;
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: var(--bg-secondary);
+                width: 80%;
+                max-width: 300px;
+                padding: 2rem;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--glass-border);
+                transition: var(--transition-smooth);
             }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(30, 27, 75, 0.2);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary-purple), var(--light-blue));
-            border-radius: 4px;
+
+            .nav-links.active {
+                right: 5%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .services-section {
+                padding: 8rem 5% 4rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg"></div>
-    
-    <!-- Floating Shapes -->
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    
-    <!-- Navigation -->
-    <nav class="glass-nav fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-bold glow-text">Df</h1>
-                </div>
-                
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4 space-x-reverse">
-                        <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium">الرئيسية</a>
-                        <a href="about.html" class="nav-link px-3 py-2 text-sm font-medium">من أنا</a>
-                        <a href="skills.html" class="nav-link px-3 py-2 text-sm font-medium">القدرات</a>
-                        <a href="services.html" class="nav-link active px-3 py-2 text-sm font-medium">الخدمات</a>
-                        <a href="coming-soon.html" class="nav-link px-3 py-2 text-sm font-medium">قريباً</a>
-                        <a href="contact.html" class="nav-link px-3 py-2 text-sm font-medium">تواصل</a>
-                    </div>
-                </div>
-                
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden glass border-t border-purple-500/20">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الرئيسية</a>
-                <a href="about.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">من أنا</a>
-                <a href="skills.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">القدرات</a>
-                <a href="services.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الخدمات</a>
-                <a href="coming-soon.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">قريباً</a>
-                <a href="contact.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">تواصل</a>
-            </div>
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Df</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="about.html">من أنا</a></li>
+                <li><a href="skills.html">القدرات</a></li>
+                <li><a href="services.html" class="active">الخدمات</a></li>
+                <li><a href="coming-soon.html">قريبًا</a></li>
+                <li><a href="contact.html">تواصل</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
-    
-    <!-- Services Section -->
-    <section class="py-20 pt-32 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="text-center mb-16 fade-in">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">الخدمات</span>
-                </h1>
-                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                    حلول تقنية شاملة مصممة خصيصاً لتحقيق أهدافك
-                </p>
-                <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full mt-6"></div>
-            </div>
-            
-            <!-- Services Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-                <!-- Web Development -->
-                <div class="glass service-card p-10 rounded-3xl slide-in-left">
-                    <div class="service-icon text-center">💻</div>
-                    <h2 class="text-3xl font-bold mb-6 text-purple-300 text-center">مواقع الويب</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed mb-8 text-center">
-                        واجهات حديثة، سرعة عالية، تصميم مريح، أنيميشنات احترافية، وتحسين تجربة المستخدم.
-                    </p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="use-case">
-                            <h4 class="font-semibold text-purple-300 mb-2">مواقع شركات حديثة</h4>
-                            <p class="text-sm text-gray-400">تصميمات متجاوبة مع أنيميشنات متقنة</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-purple-300 mb-2">تطبيقات ويب متكاملة</h4>
-                            <p class="text-sm text-gray-400">أنظمة إدارة متكاملة مع لوحات تحكم</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-purple-300 mb-2">صفحات هبوط تسويقية</h4>
-                            <p class="text-sm text-gray-400">صفحات مخصصة لتحويل الزوار إلى عملاء</p>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="inline-flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-full">
-                            <span class="text-sm font-semibold">ابدأ مشروعك</span>
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </div>
+
+    <section class="services-section">
+        <div class="section-header" data-aos="fade-up">
+            <h1>خدماتي</h1>
+            <p>حلول تقنية شاملة تساعدك على تحقيق أهدافك الرقمية بسرعة وفعالية</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-icon-wrapper">
+                    <div class="service-icon">🌐</div>
                 </div>
-                
-                <!-- Bot Development -->
-                <div class="glass service-card p-10 rounded-3xl slide-in-right">
-                    <div class="service-icon text-center">🤖</div>
-                    <h2 class="text-3xl font-bold mb-6 text-blue-300 text-center">البوتات الذكية</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed mb-8 text-center">
-                        تطوير بوتات Telegram وDiscord، مهام تلقائية، جلب البيانات، نشر المحتوى، إدارة الأنظمة.
-                    </p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="use-case">
-                            <h4 class="font-semibold text-blue-300 mb-2">بوتات إدارة المجموعات</h4>
-                            <p class="text-sm text-gray-400">إدارة تلقائية للمجموعات والقنوات</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-blue-300 mb-2">بوتات جلب المحتوى</h4>
-                            <p class="text-sm text-gray-400">جلب أخبار ومحتوى من مصادر متعددة</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-blue-300 mb-2">بوتات تفاعلية ذكية</h4>
-                            <p class="text-sm text-gray-400">بوتات تجيب على الأسئلة وتنفذ الأوامر</p>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full">
-                            <span class="text-sm font-semibold">اطلب بوتك</span>
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Automation -->
-                <div class="glass service-card p-10 rounded-3xl slide-in-left">
-                    <div class="service-icon text-center">⚡</div>
-                    <h2 class="text-3xl font-bold mb-6 text-purple-300 text-center">الأتمتة</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed mb-8 text-center">
-                        أدوات تنفذ مهام متكررة، ربط الخدمات، استخراج وتنظيم البيانات، تحسين الوقت والجهد.
-                    </p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="use-case">
-                            <h4 class="font-semibold text-purple-300 mb-2">ربط المنصات المختلفة</h4>
-                            <p class="text-sm text-gray-400">ربط Gmail، Slack، Trello، وأدوات أخرى</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-purple-300 mb-2">معالجة البيانات التلقائية</h4>
-                            <p class="text-sm text-gray-400">تحويل وتنظيم البيانات من مصادر متعددة</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-purple-300 mb-2">الإشعارات والتنبيهات</h4>
-                            <p class="text-sm text-gray-400">نظام تنبيهات ذكي مخصص لاحتياجاتك</p>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="inline-flex items-center bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-full">
-                            <span class="text-sm font-semibold">أتمت عملك</span>
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Custom Tools -->
-                <div class="glass service-card p-10 rounded-3xl slide-in-right">
-                    <div class="service-icon text-center">🛠️</div>
-                    <h2 class="text-3xl font-bold mb-6 text-blue-300 text-center">أدوات مخصصة</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed mb-8 text-center">
-                        تحويل أي فكرة صغيرة إلى أداة عملية تعمل فوراً، Mini Tools، أنظمة خفيفة وسريعة.
-                    </p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="use-case">
-                            <h4 class="font-semibold text-blue-300 mb-2">أدوات تحليل البيانات</h4>
-                            <p class="text-sm text-gray-400">أدوات لتحليل وتصور البيانات بسهولة</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-blue-300 mb-2">حلول سطح المكتب</h4>
-                            <p class="text-sm text-gray-400">تطبيقات خفيفة لحل مشاكل محددة</p>
-                        </div>
-                        <div class="use-case">
-                            <h4 class="font-semibold text-blue-300 mb-2">أنظمة إدارة مخصصة</h4>
-                            <p class="text-sm text-gray-400">أنظمة مصممة خصيصاً لعملك</p>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full">
-                            <span class="text-sm font-semibold">نفذ فكرتك</span>
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </div>
+                <h3>مواقع الويب</h3>
+                <p>تطوير مواقع ويب حديثة وسريعة مع تجربة مستخدم استثنائية تترك انطباعًا قويًا</p>
+                <ul class="service-features">
+                    <li>واجهات عصرية وجذابة</li>
+                    <li>سرعة تحميل عالية</li>
+                    <li>تصميم متجاوب لجميع الأجهزة</li>
+                    <li>أنيميشنات احترافية</li>
+                    <li>تحسين محركات البحث SEO</li>
+                </ul>
+                <div class="use-case">
+                    <strong>مثال:</strong>
+                    موقع شركة تقنية، متجر إلكتروني، صفحة هبوط لخدمة جديدة
                 </div>
             </div>
-            
-            <!-- Process Section -->
-            <div class="text-center mb-20 fade-in">
-                <div class="glass p-12 rounded-3xl">
-                    <h2 class="text-3xl font-bold mb-8 text-purple-300">كيف أعمل؟</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">📋</div>
-                            <h3 class="text-xl font-semibold mb-2 text-purple-300">1. الفهم</h3>
-                            <p class="text-gray-400">فهم عميق لاحتياجاتك وأهدافك</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">🎯</div>
-                            <h3 class="text-xl font-semibold mb-2 text-blue-300">2. التخطيط</h3>
-                            <p class="text-gray-400">وضع خطة عمل واضحة وجدول زمني</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">🔧</div>
-                            <h3 class="text-xl font-semibold mb-2 text-purple-300">3. التطوير</h3>
-                            <p class="text-gray-400">بناء الحل بأعلى معايير الجودة</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">🚀</div>
-                            <h3 class="text-xl font-semibold mb-2 text-blue-300">4. التسليم</h3>
-                            <p class="text-gray-400">تسليم المشروع مع الدعم المستمر</p>
-                        </div>
-                    </div>
+
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-icon-wrapper">
+                    <div class="service-icon">🤖</div>
+                </div>
+                <h3>البوتات</h3>
+                <p>بوتات ذكية لـ Telegram و Discord تؤتمت مهامك وتوفر تجربة تفاعلية فريدة</p>
+                <ul class="service-features">
+                    <li>تنفيذ مهام تلقائية</li>
+                    <li>جلب ومعالجة البيانات</li>
+                    <li>نشر المحتوى وإدارته</li>
+                    <li>إدارة المجموعات والمستخدمين</li>
+                    <li>تكامل مع خدمات خارجية</li>
+                </ul>
+                <div class="use-case">
+                    <strong>مثال:</strong>
+                    بوت إدارة مجتمع، بوت إشعارات، بوت خدمة عملاء تلقائي
                 </div>
             </div>
-            
-            <!-- CTA -->
-            <div class="text-center fade-in">
-                <div class="glass p-12 rounded-3xl">
-                    <h2 class="text-3xl font-bold mb-6 text-purple-300">جاهز لبدء مشروعك؟</h2>
-                    <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                        دعنا نناقش كيف يمكنني مساعدتك في تحقيق أهدافك التقنية. أقدم استشارة مجانية للمشروع الأول.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="contact.html" class="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all duration-300">
-                            تواصل معي
-                        </a>
-                        <a href="coming-soon.html" class="inline-block glass px-8 py-4 rounded-full text-white font-semibold text-lg hover:bg-purple-500/20 transition-all duration-300">
-                            مشاريعي
-                        </a>
-                    </div>
+
+            <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-icon-wrapper">
+                    <div class="service-icon">⚙️</div>
+                </div>
+                <h3>الأتمتة</h3>
+                <p>أنظمة أتمتة ذكية توفر الوقت وتزيد الإنتاجية عبر ربط الخدمات وتنفيذ المهام</p>
+                <ul class="service-features">
+                    <li>أتمتة المهام المتكررة</li>
+                    <li>ربط الخدمات والأنظمة</li>
+                    <li>استخراج وتنظيم البيانات</li>
+                    <li>إرسال تقارير تلقائية</li>
+                    <li>مراقبة وتنبيهات ذكية</li>
+                </ul>
+                <div class="use-case">
+                    <strong>مثال:</strong>
+                    نظام معالجة طلبات، تجميع بيانات من مصادر متعددة، نظام نشر محتوى
+                </div>
+            </div>
+
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-icon-wrapper">
+                    <div class="service-icon">🛠️</div>
+                </div>
+                <h3>أدوات مخصصة</h3>
+                <p>تحويل أفكارك إلى أدوات عملية فورية، مهما كانت صغيرة أو بسيطة</p>
+                <ul class="service-features">
+                    <li>Mini Tools سريعة</li>
+                    <li>حلول مخصصة لاحتياجاتك</li>
+                    <li>واجهات بسيطة وواضحة</li>
+                    <li>أنظمة خفيفة الوزن</li>
+                    <li>جاهزة للاستخدام فورًا</li>
+                </ul>
+                <div class="use-case">
+                    <strong>مثال:</strong>
+                    أداة تحويل صيغ، محول عملات، مولد نصوص، آلة حاسبة مخصصة
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Footer -->
-    <footer class="py-12 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="glass p-8 rounded-2xl">
-                <p class="text-gray-400">&copy; 2024 Df. جميع الحقوق محفوظة.</p>
-                <p class="text-sm text-gray-500 mt-2">مطور ويب وصانع أدوات ذكية</p>
-            </div>
-        </div>
+
+    <footer class="footer">
+        <p>© 2024 Df Portfolio. صُنع بـ 💜 باستخدام تقنيات حديثة</p>
     </footer>
-    
-    <!-- JavaScript -->
-    <script src="js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
 </body>
-</html>
+    </html>
