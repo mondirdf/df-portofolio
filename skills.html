@@ -3,468 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القدرات - Df</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Custom Styles -->
+    <title>القدرات — Df Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <style>
         :root {
-            --primary-purple: #6b46c1;
-            --dark-purple: #553c9a;
-            --light-blue: #3b82f6;
-            --glass-bg: rgba(30, 27, 75, 0.25);
-            --glass-border: rgba(139, 92, 246, 0.2);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --purple-dark: #6b3fa0;
+            --purple-medium: #8b5cf6;
+            --purple-light: #a78bfa;
+            --blue-accent: #60a5fa;
+            --cyan-accent: #22d3ee;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: rgba(139, 92, 246, 0.1);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 24px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #ffffff;
+            font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
             overflow-x: hidden;
-            min-height: 100vh;
         }
-        
-        /* Glassmorphism Effect */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .glass:hover {
-            background: rgba(30, 27, 75, 0.35);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
-        }
-        
-        .glass-nav {
-            background: rgba(30, 27, 75, 0.15);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-        }
-        
-        /* Animated Background */
-        .animated-bg {
+
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e, #0f0f23);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Floating Shapes */
-        .floating-shape {
+
+        .gradient-orb {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
-            filter: blur(40px);
-            animation: float 20s infinite ease-in-out;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
         }
-        
-        .shape-1 {
-            width: 300px;
-            height: 300px;
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--purple-medium), transparent);
             top: 10%;
-            left: 10%;
-            animation-delay: 0s;
+            right: -10%;
         }
-        
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 15%;
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--blue-accent), transparent);
+            bottom: 10%;
+            left: -10%;
             animation-delay: 5s;
         }
-        
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(120deg); }
-            66% { transform: translateY(10px) rotate(240deg); }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 30px) scale(1.05); }
         }
-        
-        /* Glow Effects */
-        .glow-text {
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition-smooth);
         }
-        
-        /* Navigation */
-        .nav-link {
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--purple-light), var(--blue-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-smooth);
             position: relative;
-            transition: all 0.3s ease;
+            padding: 0.5rem 0;
         }
-        
-        .nav-link::after {
+
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             right: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--primary-purple), var(--light-blue));
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--purple-medium), var(--blue-accent));
+            transition: var(--transition-smooth);
         }
-        
-        .nav-link:hover::after,
-        .nav-link.active::after {
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
-        
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
-        
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
         }
-        
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
+
+        .skills-section {
+            min-height: 100vh;
+            padding: 10rem 5% 6rem;
+            position: relative;
+            z-index: 1;
         }
-        
-        /* Skill Card Hover Effects */
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
         .skill-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
-        
+
         .skill-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple-medium), var(--blue-accent));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: var(--transition-smooth);
         }
-        
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--purple-medium);
+            box-shadow: 0 20px 60px var(--glass-shadow);
+        }
+
         .skill-card:hover::before {
-            left: 100%;
+            transform: scaleX(1);
+            transform-origin: left;
         }
-        
+
         .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple-medium), var(--blue-accent));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
         }
-        
+
         .skill-card:hover .skill-icon {
-            transform: scale(1.1) rotate(5deg);
+            transform: rotate(5deg) scale(1.1);
         }
-        
-        /* Progress Bars */
-        .progress-bar {
-            height: 8px;
-            background: rgba(139, 92, 246, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--purple-light);
             margin-top: 1rem;
         }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-purple), var(--light-blue));
-            border-radius: 4px;
-            width: 0%;
-            transition: width 2s ease-out;
+
+        .footer {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
         }
-        
-        /* Responsive */
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         @media (max-width: 768px) {
-            .floating-shape {
-                display: none;
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: var(--bg-secondary);
+                width: 80%;
+                max-width: 300px;
+                padding: 2rem;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--glass-border);
+                transition: var(--transition-smooth);
             }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(30, 27, 75, 0.2);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary-purple), var(--light-blue));
-            border-radius: 4px;
+
+            .nav-links.active {
+                right: 5%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .skills-section {
+                padding: 8rem 5% 4rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg"></div>
-    
-    <!-- Floating Shapes -->
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    
-    <!-- Navigation -->
-    <nav class="glass-nav fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-bold glow-text">Df</h1>
-                </div>
-                
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4 space-x-reverse">
-                        <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium">الرئيسية</a>
-                        <a href="about.html" class="nav-link px-3 py-2 text-sm font-medium">من أنا</a>
-                        <a href="skills.html" class="nav-link active px-3 py-2 text-sm font-medium">القدرات</a>
-                        <a href="services.html" class="nav-link px-3 py-2 text-sm font-medium">الخدمات</a>
-                        <a href="coming-soon.html" class="nav-link px-3 py-2 text-sm font-medium">قريباً</a>
-                        <a href="contact.html" class="nav-link px-3 py-2 text-sm font-medium">تواصل</a>
-                    </div>
-                </div>
-                
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden glass border-t border-purple-500/20">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الرئيسية</a>
-                <a href="about.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">من أنا</a>
-                <a href="skills.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">القدرات</a>
-                <a href="services.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الخدمات</a>
-                <a href="coming-soon.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">قريباً</a>
-                <a href="contact.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">تواصل</a>
-            </div>
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Df</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="about.html">من أنا</a></li>
+                <li><a href="skills.html" class="active">القدرات</a></li>
+                <li><a href="services.html">الخدمات</a></li>
+                <li><a href="coming-soon.html">قريبًا</a></li>
+                <li><a href="contact.html">تواصل</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
-    
-    <!-- Skills Section -->
-    <section class="py-20 pt-32 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="text-center mb-16 fade-in">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">القدرات</span>
-                </h1>
-                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                    مجموعة المهارات والأدوات التي أستخدمها في بناء الحلول التقنية
-                </p>
-                <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full mt-6"></div>
+
+    <section class="skills-section">
+        <div class="section-header" data-aos="fade-up">
+            <h1>قدراتي التقنية</h1>
+            <p>مهارات متنوعة في تطوير الحلول الرقمية الحديثة، من الواجهات إلى الأتمتة والبوتات</p>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="skill-icon">🎨</div>
+                <h3>تطوير واجهات Frontend</h3>
+                <p>بناء واجهات عصرية وسريعة باستخدام HTML، CSS، JavaScript، React، وأحدث التقنيات مع اهتمام بالتفاصيل وتجربة المستخدم.</p>
+                <span class="skill-tag">React • HTML • CSS</span>
             </div>
-            
-            <!-- Skills Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Frontend Development -->
-                <div class="glass skill-card p-8 rounded-2xl slide-in-left" data-skill="frontend">
-                    <div class="skill-icon">💻</div>
-                    <h3 class="text-2xl font-bold mb-4 text-purple-300">تطوير الواجهات</h3>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        بناء مواقع ويب حديثة وسريعة باستخدام أحدث التقنيات والأطر العامة.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">HTML5</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">CSS3</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">JavaScript</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">React</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="95%"></div>
-                    </div>
-                </div>
-                
-                <!-- Bot Development -->
-                <div class="glass skill-card p-8 rounded-2xl slide-in-right" data-skill="bots">
-                    <div class="skill-icon">🤖</div>
-                    <h3 class="text-2xl font-bold mb-4 text-blue-300">صناعة البوتات</h3>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        تطوير بوتات Telegram وDiscord ذكية مع وظائف متقدمة وأتمتة كاملة.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Python</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Node.js</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Telegram API</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Discord.js</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="90%"></div>
-                    </div>
-                </div>
-                
-                <!-- Automation -->
-                <div class="glass skill-card p-8 rounded-2xl slide-in-left" data-skill="automation">
-                    <div class="skill-icon">⚡</div>
-                    <h3 class="text-2xl font-bold mb-4 text-purple-300">الأتمتة</h3>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        بناء أنظمة أتمتة متقدمة تربط الخدمات وتنفذ المهام تلقائياً.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">Zapier</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">n8n</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">APIs</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">Webhooks</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="85%"></div>
-                    </div>
-                </div>
-                
-                <!-- Web Scraping -->
-                <div class="glass skill-card p-8 rounded-2xl slide-in-right" data-skill="scraping">
-                    <div class="skill-icon">🔍</div>
-                    <h3 class="text-2xl font-bold mb-4 text-blue-300">استخراج البيانات</h3>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        جمع وتنظيم البيانات من مصادر متعددة باستخدام تقنيات Scraping متقدمة.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Scrapy</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">BeautifulSoup</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Selenium</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Pandas</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="88%"></div>
-                    </div>
-                </div>
-                
-                <!-- Mini Tools -->
-                <div class="glass skill-card p-8 rounded-2xl slide-in-left" data-skill="tools">
-                    <div class="skill-icon">🛠️</div>
-                    <h3 class="text-2xl font-bold mb-4 text-purple-300">أدوات مخصصة</h3>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        تحويل الأفكار الصغيرة إلى أدوات عملية تعمل فوراً مع واجهات سهلة الاستخدام.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">FastAPI</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">Streamlit</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">Flask</span>
-                        <span class="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-purple-300">SQLite</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="92%"></div>
-                    </div>
-                </div>
-                
-                <!-- UX/UI Design -->
-                <div class="glass skill-card p-8 rounded-2xl slide-in-right" data-skill="design">
-                    <div class="skill-icon">🎨</div>
-                    <h3 class="text-2xl font-bold mb-4 text-blue-300">تصميم UX/UI</h3>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        تحسين تجربة المستخدم وتصميم واجهات جميلة وسهلة الاستخدام.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Figma</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Adobe XD</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Tailwind CSS</span>
-                        <span class="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-blue-300">Responsive</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" data-width="87%"></div>
-                    </div>
-                </div>
+
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="skill-icon">🤖</div>
+                <h3>صناعة البوتات</h3>
+                <p>تطوير بوتات Telegram وDiscord بمختلف الوظائف - من الأتمتة البسيطة إلى الأنظمة المعقدة التي تتعامل مع البيانات والمستخدمين.</p>
+                <span class="skill-tag">Telegram • Discord</span>
             </div>
-            
-            <!-- Skills Summary -->
-            <div class="text-center mt-20 fade-in">
-                <div class="glass p-12 rounded-3xl">
-                    <h2 class="text-3xl font-bold mb-6 text-purple-300">لماذا أعمل بهذه التقنيات؟</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
-                        اخترت هذه المجالات لأنها تمثل الجمع المثالي بين الإبداع والعملية. كل مهارة تكمل الأخرى، 
-                        مما يسمح لي بتقديم حلول شاملة ومتكاملة تلبي احتياجات العملاء الحديثة.
-                    </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                        <div class="text-center">
-                            <div class="text-3xl mb-4">🚀</div>
-                            <h3 class="text-xl font-semibold mb-2 text-purple-300">التحديث المستمر</h3>
-                            <p class="text-gray-400">دائماً أتابع أحدث التقنيات وأعمل على تحديث مهاراتي</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl mb-4">🔧</div>
-                            <h3 class="text-xl font-semibold mb-2 text-blue-300">التكيف السريع</h3>
-                            <p class="text-gray-400">قادر على التكيف مع أي تقنية أو أداة جديدة بسرعة</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl mb-4">📈</div>
-                            <h3 class="text-xl font-semibold mb-2 text-purple-300">التحسين المستمر</h3>
-                            <p class="text-gray-400">دائماً أبحث عن طرق لتحسين الأداء وجودة العمل</p>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="skill-icon">⚙️</div>
+                <h3>أنظمة الأتمتة</h3>
+                <p>بناء أنظمة تربط المهام والخدمات، تنفذ عمليات متكررة بذكاء، وتوفر الوقت والجهد للأفراد والشركات.</p>
+                <span class="skill-tag">Automation • API</span>
+            </div>
+
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="skill-icon">🔍</div>
+                <h3>Web Scraping</h3>
+                <p>استخراج وتنظيم البيانات من مواقع الويب بطريقة احترافية، مع معالجة البيانات وتحويلها إلى صيغ قابلة للاستخدام.</p>
+                <span class="skill-tag">Python • Data</span>
+            </div>
+
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="skill-icon">🛠️</div>
+                <h3>أدوات مخصصة</h3>
+                <p>تطوير Mini Tools حسب الطلب، أدوات صغيرة لكنها قوية تحل مشاكل محددة بسرعة وفعالية.</p>
+                <span class="skill-tag">Custom Tools</span>
+            </div>
+
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="skill-icon">✨</div>
+                <h3>تحسين التصميم UX/UI</h3>
+                <p>تصميم تجارب مستخدم سلسة ومريحة، مع التركيز على البساطة، الوضوح، والجمال البصري في كل تفصيلة.</p>
+                <span class="skill-tag">Design • UX</span>
+            </div>
+
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="700">
+                <div class="skill-icon">📦</div>
+                <h3>Mini Systems</h3>
+                <p>بناء أنظمة صغيرة ومتكاملة لحلول أعمال سريعة، من أنظمة إدارة بسيطة إلى لوحات تحكم خاصة.</p>
+                <span class="skill-tag">Full Stack</span>
             </div>
         </div>
     </section>
-    
-    <!-- Footer -->
-    <footer class="py-12 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="glass p-8 rounded-2xl">
-                <p class="text-gray-400">&copy; 2024 Df. جميع الحقوق محفوظة.</p>
-                <p class="text-sm text-gray-500 mt-2">مطور ويب وصانع أدوات ذكية</p>
-            </div>
-        </div>
+
+    <footer class="footer">
+        <p>© 2024 Df Portfolio. صُنع بـ 💜 باستخدام تقنيات حديثة</p>
     </footer>
-    
-    <!-- JavaScript -->
-    <script src="js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // Skills page specific animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate progress bars when they come into view
-            const progressBars = document.querySelectorAll('.progress-fill');
-            
-            const animateProgressBars = () => {
-                progressBars.forEach(bar => {
-                    const rect = bar.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const width = bar.getAttribute('data-width');
-                        setTimeout(() => {
-                            bar.style.width = width;
-                        }, Math.random() * 500);
-                    }
-                });
-            };
-            
-            // Initial check
-            setTimeout(animateProgressBars, 1000);
-            
-            // Check on scroll
-            window.addEventListener('scroll', animateProgressBars);
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navLinks.classList.remove('active');
+            }
         });
     </script>
 </body>
-</html>
+    </html>
