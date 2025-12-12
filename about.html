@@ -3,364 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>من أنا - Df</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Custom Styles -->
+    <title>من أنا — Df Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <style>
+        /* ===== CSS Variables ===== */
         :root {
-            --primary-purple: #6b46c1;
-            --dark-purple: #553c9a;
-            --light-blue: #3b82f6;
-            --glass-bg: rgba(30, 27, 75, 0.25);
-            --glass-border: rgba(139, 92, 246, 0.2);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a27;
+            
+            --purple-dark: #6b3fa0;
+            --purple-medium: #8b5cf6;
+            --purple-light: #a78bfa;
+            --blue-accent: #60a5fa;
+            --cyan-accent: #22d3ee;
+            
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: rgba(139, 92, 246, 0.1);
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            
+            --border-radius: 24px;
+            --spacing-unit: 1rem;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #ffffff;
+            font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
             overflow-x: hidden;
-            min-height: 100vh;
         }
-        
-        /* Glassmorphism Effect */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-        }
-        
-        .glass-nav {
-            background: rgba(30, 27, 75, 0.15);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-        }
-        
-        /* Animated Background */
-        .animated-bg {
+
+        /* Background Animation */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e, #0f0f23);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Floating Shapes */
-        .floating-shape {
+
+        .gradient-orb {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
-            filter: blur(40px);
-            animation: float 20s infinite ease-in-out;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
         }
-        
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--purple-medium), transparent);
+            top: -10%;
+            right: -10%;
         }
-        
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 15%;
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--blue-accent), transparent);
+            bottom: -15%;
+            left: -10%;
             animation-delay: 5s;
         }
-        
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(120deg); }
-            66% { transform: translateY(10px) rotate(240deg); }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 30px) scale(1.05); }
         }
-        
-        /* Glow Effects */
-        .glow-text {
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition-smooth);
         }
-        
-        /* Navigation */
-        .nav-link {
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--purple-light), var(--blue-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-smooth);
             position: relative;
-            transition: all 0.3s ease;
+            padding: 0.5rem 0;
         }
-        
-        .nav-link::after {
+
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             right: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--primary-purple), var(--light-blue));
-            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--purple-medium), var(--blue-accent));
+            transition: var(--transition-smooth);
         }
-        
-        .nav-link:hover::after,
-        .nav-link.active::after {
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
-        
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
-        
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: var(--transition-smooth);
         }
-        
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
+
+        /* About Section */
+        .about-section {
+            min-height: 100vh;
+            padding: 10rem 5% 6rem;
+            position: relative;
+            z-index: 1;
         }
-        
-        /* Avatar Style */
-        .avatar {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary-purple), var(--light-blue));
-            border-radius: 50%;
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .avatar-container {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            font-weight: bold;
-            color: white;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
         }
-        
-        .avatar::before {
+
+        .avatar-art {
+            width: 60%;
+            height: 60%;
+            background: linear-gradient(135deg, var(--purple-medium), var(--blue-accent), var(--cyan-accent));
+            border-radius: 50%;
+            position: relative;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .avatar-art::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: linear-gradient(45deg, var(--purple-light), var(--blue-accent));
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.5;
+            animation: rotate 10s linear infinite;
         }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .about-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-text {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-text {
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-medium);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--purple-light);
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         /* Responsive */
-        @media (max-width: 768px) {
-            .floating-shape {
-                display: none;
+        @media (max-width: 968px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .avatar-container {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
             }
         }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(30, 27, 75, 0.2);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary-purple), var(--light-blue));
-            border-radius: 4px;
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: var(--bg-secondary);
+                width: 80%;
+                max-width: 300px;
+                padding: 2rem;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--glass-border);
+                transition: var(--transition-smooth);
+            }
+
+            .nav-links.active {
+                right: 5%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .about-section {
+                padding: 8rem 5% 4rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg"></div>
-    
-    <!-- Floating Shapes -->
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    
-    <!-- Navigation -->
-    <nav class="glass-nav fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-bold glow-text">Df</h1>
-                </div>
-                
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4 space-x-reverse">
-                        <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium">الرئيسية</a>
-                        <a href="about.html" class="nav-link active px-3 py-2 text-sm font-medium">من أنا</a>
-                        <a href="skills.html" class="nav-link px-3 py-2 text-sm font-medium">القدرات</a>
-                        <a href="services.html" class="nav-link px-3 py-2 text-sm font-medium">الخدمات</a>
-                        <a href="coming-soon.html" class="nav-link px-3 py-2 text-sm font-medium">قريباً</a>
-                        <a href="contact.html" class="nav-link px-3 py-2 text-sm font-medium">تواصل</a>
-                    </div>
-                </div>
-                
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden glass border-t border-purple-500/20">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الرئيسية</a>
-                <a href="about.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">من أنا</a>
-                <a href="skills.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">القدرات</a>
-                <a href="services.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">الخدمات</a>
-                <a href="coming-soon.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">قريباً</a>
-                <a href="contact.html" class="block px-3 py-2 text-base font-medium text-white hover:text-purple-400">تواصل</a>
-            </div>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Df</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="about.html" class="active">من أنا</a></li>
+                <li><a href="skills.html">القدرات</a></li>
+                <li><a href="services.html">الخدمات</a></li>
+                <li><a href="coming-soon.html">قريبًا</a></li>
+                <li><a href="contact.html">تواصل</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
-    
+
     <!-- About Section -->
-    <section class="py-20 pt-32 relative">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="text-center mb-16 fade-in">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">
-                    من هو <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Df</span>؟
-                </h1>
-                <div class="w-24 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full"></div>
-            </div>
-            
-            <!-- Avatar -->
-            <div class="text-center mb-16 fade-in">
-                <div class="avatar mx-auto mb-8">
-                    Df
+    <section class="about-section">
+        <div class="about-container">
+            <div class="about-visual" data-aos="fade-left">
+                <div class="avatar-container">
+                    <div class="avatar-art"></div>
                 </div>
             </div>
-            
-            <!-- Content -->
-            <div class="space-y-12">
-                <!-- Introduction -->
-                <div class="glass p-8 md:p-12 rounded-3xl slide-in-left">
-                    <h2 class="text-3xl font-bold mb-6 text-purple-300">مطور تقني شغوف</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed mb-6">
-                        مطور تقني يهتم ببناء حلول بسيطة وفعّالة. متخصص في تطوير الواجهات، صناعة البوتات، الأتمتة، واستخراج البيانات. أركز دائمًا على الجودة، البساطة، والنتيجة الفعلية.
+
+            <div class="about-content">
+                <h1 data-aos="fade-up">من هو Df؟</h1>
+                
+                <div class="about-text" data-aos="fade-up" data-aos-delay="100">
+                    <p>
+                        مطور تقني يهتم ببناء <span class="highlight-text">حلول بسيطة وفعّالة</span>. متخصص في تطوير الواجهات، صناعة البوتات، الأتمتة، واستخراج البيانات. أركز دائمًا على الجودة، البساطة، والنتيجة الفعلية.
                     </p>
-                    <p class="text-lg text-gray-300 leading-relaxed">
-                        أؤمن أن أفضل الحلول هي التي تجمع بين الوضوح والقوة. أحب بناء أنظمة صغيرة لكنها مفيدة وذات تأثير مباشر.
+                    <p>
+                        أؤمن أن أفضل الحلول هي التي تجمع بين <span class="highlight-text">الوضوح والقوة</span>. أحب بناء أنظمة صغيرة لكنها مفيدة وذات تأثير مباشر. أعمل على تحويل الأفكار المعقدة إلى تطبيقات سلسة وسهلة الاستخدام.
+                    </p>
+                    <p>
+                        التطوير بالنسبة لي ليس مجرد كتابة كود، بل <span class="highlight-text">حل مشاكل حقيقية</span> وصناعة أدوات تجعل الحياة أسهل للمستخدمين والأعمال.
                     </p>
                 </div>
-                
-                <!-- Philosophy -->
-                <div class="glass p-8 md:p-12 rounded-3xl slide-in-right">
-                    <h2 class="text-3xl font-bold mb-6 text-blue-300">منهجيتي في العمل</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="text-xl font-semibold mb-4 text-purple-300">البساطة</h3>
-                            <p class="text-gray-400 leading-relaxed">
-                                أؤمن بأن البساطة هي مفتاح النجاح. الأنظمة البسيطة أسهل في الفهم، الصيانة، والتطوير.
-                            </p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-4 text-blue-300">الكفاءة</h3>
-                            <p class="text-gray-400 leading-relaxed">
-                                كل حل أقدمه مصمم ليعمل بأقصى كفاءة ممكنة، مع التركيز على تحقيق النتائج المطلوبة بأقل الموارد.
-                            </p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-4 text-purple-300">الجودة</h3>
-                            <p class="text-gray-400 leading-relaxed">
-                                لا أقدم حلولاً نصف مكتملة. كل مشروع يتم اختباره وتطويره ليعمل بشكل مثالي.
-                            </p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-4 text-blue-300">الابتكار</h3>
-                            <p class="text-gray-400 leading-relaxed">
-                                دائماً أبحث عن حلول مبتكرة للمشاكل، مستخدماً أحدث التقنيات والأدوات المتاحة.
-                            </p>
-                        </div>
+
+                <div class="values-grid">
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="value-icon">🎯</div>
+                        <h3>التركيز على النتيجة</h3>
+                        <p>أولوية للحلول الفعالة التي تحقق أهدافًا واضحة</p>
                     </div>
-                </div>
-                
-                <!-- Values -->
-                <div class="glass p-8 md:p-12 rounded-3xl slide-in-left">
-                    <h2 class="text-3xl font-bold mb-8 text-center text-purple-300">قيمي الأساسية</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">🎯</div>
-                            <h3 class="text-xl font-semibold mb-2 text-purple-300">التركيز على النتائج</h3>
-                            <p class="text-gray-400">الهدف النهائي هو تحقيق نتائج ملموسة تساعد العملاء في أعمالهم.</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">⚡</div>
-                            <h3 class="text-xl font-semibold mb-2 text-blue-300">السرعة والكفاءة</h3>
-                            <p class="text-gray-400">تقديم حلول سريعة وفعالة دون المساس بالجودة أو الأداء.</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl mb-4">🤝</div>
-                            <h3 class="text-xl font-semibold mb-2 text-purple-300">الشراكة الحقيقية</h3>
-                            <p class="text-gray-400">العمل كشريك حقيقي مع العملاء لفهم احتياجاتهم وتقديم أفضل الحلول.</p>
-                        </div>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="value-icon">✨</div>
+                        <h3>البساطة في التعقيد</h3>
+                        <p>تحويل الأفكار المعقدة إلى تجارب بسيطة</p>
                     </div>
-                </div>
-                
-                <!-- CTA -->
-                <div class="text-center fade-in">
-                    <div class="glass p-8 rounded-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-purple-300">هل لديك مشروع في mind؟</h3>
-                        <p class="text-gray-300 mb-6">دعنا نناقش كيف يمكنني مساعدتك في تحقيق أهدافك التقنية</p>
-                        <a href="contact.html" class="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300">
-                            تواصل معي
-                        </a>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="value-icon">⚡</div>
+                        <h3>السرعة والكفاءة</h3>
+                        <p>بناء حلول سريعة ومحسّنة للأداء</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Footer -->
-    <footer class="py-12 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="glass p-8 rounded-2xl">
-                <p class="text-gray-400">&copy; 2024 Df. جميع الحقوق محفوظة.</p>
-                <p class="text-sm text-gray-500 mt-2">مطور ويب وصانع أدوات ذكية</p>
-            </div>
-        </div>
+    <footer class="footer">
+        <p>© 2024 Df Portfolio. صُنع بـ 💜 باستخدام تقنيات حديثة</p>
     </footer>
-    
-    <!-- JavaScript -->
-    <script src="js/main.js"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
 </body>
-</html>
+    </html>
